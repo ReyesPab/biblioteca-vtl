@@ -22,12 +22,6 @@ export default function BookCard({ book }: BookCardProps) {
         className="h-48 flex items-center justify-center relative overflow-hidden"
         style={{ backgroundColor: book.coverColor + '15' }}
       >
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            background: `linear-gradient(135deg, ${book.coverColor}, transparent)`
-          }}
-        />
         <div className="relative flex flex-col items-center gap-2">
           <div
             className="w-16 h-20 rounded-lg shadow-lg flex items-center justify-center"

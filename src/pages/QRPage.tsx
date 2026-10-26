@@ -3,7 +3,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { QrCode, Link as LinkIcon, Copy, Check, Download, ExternalLink } from 'lucide-react';
 
 export default function QRPage() {
-  const currentUrl = window.location.origin;
+  const currentUrl = window.location.origin + window.location.pathname;
   const [copied, setCopied] = useState(false);
   const [customPath, setCustomPath] = useState('');
 
@@ -36,15 +36,13 @@ export default function QRPage() {
           a.click();
         }
       };
-      img.src = 'image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+      img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
     }
   };
 
   const quickLinks = [
-    { label: '🏠 Página Principal', path: '/' },
-    { label: '📚 Explorar Libros', path: '/explorar' },
-    { label: '📚 Estudio / Carreras', path: '/explorar?cat=estudio' },
-    { label: '✨ Ficción', path: '/explorar?cat=ficcion' },
+    { label: '🏠 Página Principal', path: '#/' },
+    { label: '📚 Explorar Libros', path: '#/explorar' },
   ];
 
   return (

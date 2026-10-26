@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, Search, Shield, QrCode, ArrowRight, Sparkles, FileText } from 'lucide-react';
+import { BookOpen, Search, QrCode, ArrowRight, FileText } from 'lucide-react';
 import { useLibrary } from '../context/LibraryContext';
 import BookCard from '../components/BookCard';
 
@@ -55,10 +55,10 @@ export default function Home() {
             </div>
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all">
               <div className="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center mb-4">
-                <Sparkles size={24} className="text-pink-600" />
+                <BookOpen size={24} className="text-pink-600" />
               </div>
-              <h3 className="font-bold text-lg text-gray-900 mb-2">Ficción y Entretenimiento</h3>
-              <p className="text-gray-600 text-sm">Romance, terror, fantasía, ciencia ficción y más. Descubre mundos nuevos en cada página.</p>
+              <h3 className="font-bold text-lg text-gray-900 mb-2">Organizado por Carreras</h3>
+              <p className="text-gray-600 text-sm">Libros clasificados por tipo de estudio, carrera y materia. Encuentra exactamente lo que necesitas.</p>
             </div>
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all">
               <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
@@ -97,22 +97,11 @@ export default function Home() {
             <div className="text-center py-16">
               <BookOpen size={48} className="mx-auto text-gray-300 mb-4" />
               <p className="text-gray-500 text-lg">No hay libros todavía</p>
-              <Link to="/admin/login" className="text-indigo-600 font-medium mt-2 inline-flex items-center gap-1">
-                <Shield size={16} />
+              <Link to="/admin/login" className="text-indigo-600 font-medium mt-2 inline-block">
                 Iniciar sesión como admin para agregar libros
               </Link>
             </div>
           )}
-
-          <div className="sm:hidden text-center mt-8">
-            <Link
-              to="/explorar"
-              className="inline-flex items-center gap-2 text-indigo-600 font-medium"
-            >
-              Ver todos los libros
-              <ArrowRight size={18} />
-            </Link>
-          </div>
         </div>
       </section>
 

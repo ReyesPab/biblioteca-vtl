@@ -37,7 +37,6 @@ export default function AdminDashboard() {
           <div className="p-12 text-center">
             <BookOpen size={48} className="mx-auto text-gray-300 mb-4" />
             <p className="text-gray-500">No hay libros en la biblioteca</p>
-            <p className="text-gray-400 text-sm mt-1">Agrega el primer libro con el botón de arriba</p>
           </div>
         ) : (
           <div className="divide-y divide-gray-100">
@@ -65,14 +64,12 @@ export default function AdminDashboard() {
                   <button
                     onClick={() => { setEditingId(book.id); setShowForm(true); }}
                     className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
-                    title="Editar"
                   >
                     <Edit2 size={18} />
                   </button>
                   <button
                     onClick={() => { if (confirm('¿Eliminar este libro?')) deleteBook(book.id); }}
                     className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                    title="Eliminar"
                   >
                     <Trash2 size={18} />
                   </button>
@@ -284,7 +281,6 @@ function BookForm({ editingId, onClose }: { editingId: string | null; onClose: (
                   type="button"
                   onClick={removePdf}
                   className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                  title="Eliminar PDF"
                 >
                   <X size={18} />
                 </button>

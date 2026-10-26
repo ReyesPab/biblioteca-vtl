@@ -17,13 +17,6 @@ interface LibraryContextType {
 
 const LibraryContext = createContext<LibraryContextType | null>(null);
 
-// Maximum PDF size in bytes (4MB to stay within localStorage limits)
-const MAX_PDF_SIZE = 4 * 1024 * 1024;
-
-export function getMaxPdfSize() {
-  return MAX_PDF_SIZE;
-}
-
 const SAMPLE_BOOKS: Book[] = [
   {
     id: uuidv4(),
@@ -43,15 +36,11 @@ Programar es el arte de darle instrucciones a una computadora para que realice t
 
 Las variables son como cajas donde guardamos información.
 
-\`\`\`
-let nombre = "María";
-let edad = 25;
-\`\`\`
-
 ## Ejercicios
 
 1. Crea un programa que imprima tu nombre 10 veces
-2. Escribe una función que calcule el área de un rectángulo`,
+2. Escribe una función que calcule el área de un rectángulo
+3. Crea un programa que determine si un número es par o impar`,
     createdAt: '2024-01-15',
     downloads: 145,
     views: 892,
@@ -68,7 +57,7 @@ let edad = 25;
 
 ## Prólogo
 
-La casa llevaba abandonada más de veinte años cuando Elena la descubrió.
+La casa llevaba abandonada más de veinte años cuando Elena la descubrió por casualidad.
 
 ## Capítulo 1
 
@@ -122,65 +111,21 @@ Esa noche, sin embargo, algo era diferente. Había alguien nuevo en el turno noc
     downloads: 312,
     views: 1567,
   },
-  {
-    id: uuidv4(),
-    title: 'Anatomía Humana Esencial',
-    author: 'Dra. Patricia Vega',
-    description: 'Guía visual de anatomía humana para estudiantes de medicina.',
-    category: 'estudio',
-    subcategory: 'medicina',
-    coverColor: '#22c55e',
-    content: `# Anatomía Humana Esencial
-
-## Sistema Óseo
-
-El cuerpo humano adulto tiene 206 huesos.
-
-## Sistema Muscular
-
-El cuerpo humano tiene más de 600 músculos.
-
-## Sistema Cardiovascular
-
-El corazón tiene 4 cámaras.`,
-    createdAt: '2024-05-12',
-    downloads: 178,
-    views: 934,
-  },
-  {
-    id: uuidv4(),
-    title: 'El Último Dragón',
-    author: 'Miguel Ángel Fuentes',
-    description: 'Una épica historia de fantasía donde un joven descubre que es el último heredero de los domadores de dragones.',
-    category: 'ficcion',
-    subcategory: 'fantasia',
-    coverColor: '#f97316',
-    content: `# El Último Dragón
-
-## Prólogo
-
-En un tiempo antes del tiempo, cuando los ríos hablaban y las montañas cantaban, existían los Domadores.
-
-## Capítulo 1
-
-Kael tenía diecisiete años y una marca en el hombro que nadie podía explicar.
-
-Esa noche, mientras dormía, soñó con fuego. No un fuego que quema, sino uno que habla.`,
-    createdAt: '2024-06-18',
-    downloads: 267,
-    views: 1389,
-  },
 ];
+
+const MAX_PDF_SIZE = 4 * 1024 * 1024;
+
+export function getMaxPdfSize() {
+  return MAX_PDF_SIZE;
+}
 
 export function LibraryProvider({ children }: { children: ReactNode }) {
   const [books, setBooks] = useState<Book[]>(() => {
     try {
       const saved = localStorage.getItem('biblioteca_books');
-      if (saved) {
-        return JSON.parse(saved);
-      }
+      if (saved) return JSON.parse(saved);
     } catch (e) {
-      console.warn('Error loading books from localStorage, using defaults');
+      console.warn('Error loading books from localStorage');
     }
     return SAMPLE_BOOKS;
   });
@@ -193,7 +138,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem('biblioteca_books', JSON.stringify(books));
     } catch (e) {
-      console.warn('localStorage full, PDF data may not persist');
+      console.warn('localStorage full');
       const booksWithoutPdf = books.map(b => ({ ...b, pdfData: undefined }));
       localStorage.setItem('biblioteca_books', JSON.stringify(booksWithoutPdf));
     }
@@ -211,9 +156,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     return false;
   };
 
-  const logout = () => {
-    setIsAdmin(false);
-  };
+  const logout = () => setIsAdmin(false);
 
   const addBook = (bookData: Omit<Book, 'id' | 'createdAt' | 'downloads' | 'views'>) => {
     const newBook: Book = {

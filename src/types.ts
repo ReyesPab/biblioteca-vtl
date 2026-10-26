@@ -7,8 +7,8 @@ export interface Book {
   subcategory: string;
   coverColor: string;
   content: string;
-  pdfData?: string; // Base64 encoded PDF
-  pdfName?: string; // Original PDF filename
+  pdfData?: string;
+  pdfName?: string;
   createdAt: string;
   downloads: number;
   views: number;

@@ -84,6 +84,7 @@ export default function BookReader() {
               h1 { color: #1a1a1a; border-bottom: 2px solid #6366f1; padding-bottom: 10px; }
               h2 { color: #4f46e5; margin-top: 30px; }
               .meta { color: #666; font-size: 14px; margin-bottom: 30px; }
+              pre { background: #f5f5f5; padding: 15px; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; }
             </style>
           </head>
           <body>
@@ -92,7 +93,7 @@ export default function BookReader() {
               <p><strong>Autor:</strong> ${book.author}</p>
               <p><strong>Categoría:</strong> ${book.category === 'estudio' ? 'Estudio' : 'Ficción'} - ${subcategoryLabel}</p>
             </div>
-            <div><pre style="white-space: pre-wrap;">${book.content}</pre></div>
+            <pre>${book.content}</pre>
           </body>
           </html>
         `);
@@ -316,13 +317,13 @@ function renderMarkdown(content: string) {
     } else if (line.startsWith('- ')) {
       elements.push(
         <li key={key++} className="text-gray-700 ml-4 mb-1 list-disc">
-          {renderInline(line.slice(2))}
+          {line.slice(2)}
         </li>
       );
     } else if (/^\d+\. /.test(line)) {
       elements.push(
         <li key={key++} className="text-gray-700 ml-4 mb-1 list-decimal">
-          {renderInline(line.replace(/^\d+\. /, ''))}
+          {line.replace(/^\d+\. /, '')}
         </li>
       );
     } else if (line.trim() === '') {
@@ -330,50 +331,11 @@ function renderMarkdown(content: string) {
     } else {
       elements.push(
         <p key={key++} className="text-gray-700 leading-relaxed mb-2">
-          {renderInline(line)}
+          {line}
         </p>
       );
     }
   }
 
   return elements;
-}
-
-function renderInline(text: string): (string | JSX.Element)[] {
-  const parts: (string | JSX.Element)[] = [];
-  let remaining = text;
-  let key = 0;
-
-  while (remaining.length > 0) {
-    const boldMatch = remaining.match(/\*\*(.+?)\*\*/);
-    const codeMatch = remaining.match(/`([^`]+)`/);
-
-    let matchIndex = Infinity;
-    let matchLength = 0;
-    let matchElement: JSX.Element | null = null;
-
-    if (boldMatch && boldMatch.index !== undefined && boldMatch.index < matchIndex) {
-      matchIndex = boldMatch.index;
-      matchLength = boldMatch[0].length;
-      matchElement = <strong key={`b${key++}`} className="font-bold">{boldMatch[1]}</strong>;
-    }
-    if (codeMatch && codeMatch.index !== undefined && codeMatch.index < matchIndex) {
-      matchIndex = codeMatch.index;
-      matchLength = codeMatch[0].length;
-      matchElement = <code key={`c${key++}`} className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono text-indigo-600">{codeMatch[1]}</code>;
-    }
-
-    if (matchElement && matchIndex < Infinity) {
-      if (matchIndex > 0) {
-        parts.push(remaining.slice(0, matchIndex));
-      }
-      parts.push(matchElement);
-      remaining = remaining.slice(matchIndex + matchLength);
-    } else {
-      parts.push(remaining);
-      break;
-    }
-  }
-
-  return parts;
 }

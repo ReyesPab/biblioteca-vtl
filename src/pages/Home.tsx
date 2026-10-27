@@ -78,41 +78,49 @@ export default function Home() {
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Libros Recientes</h2>
               <p className="text-gray-500 mt-1">Las últimas publicaciones de nuestra biblioteca</p>
             </div>
-            <Link
-              to="/explorar"
-              className="hidden sm:flex items-center gap-2 text-indigo-600 font-medium hover:text-indigo-700 transition-colors"
-            >
-              Ver todos
-              <ArrowRight size={18} />
-            </Link>
+            {books.length > 0 && (
+              <Link
+                to="/explorar"
+                className="hidden sm:flex items-center gap-2 text-indigo-600 font-medium hover:text-indigo-700 transition-colors"
+              >
+                Ver todos
+                <ArrowRight size={18} />
+              </Link>
+            )}
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentBooks.map(book => (
-              <BookCard key={book.id} book={book} />
-            ))}
-          </div>
+          {books.length > 0 ? (
+            <>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {recentBooks.map(book => (
+                  <BookCard key={book.id} book={book} />
+                ))}
+              </div>
 
-          {books.length === 0 && (
-            <div className="text-center py-16">
-              <BookOpen size={48} className="mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-500 text-lg">No hay libros todavía</p>
-              <Link to="/admin/login" className="text-indigo-600 font-medium mt-2 inline-flex items-center gap-1">
-                <Shield size={16} />
-                Iniciar sesión como admin para agregar libros
+              <div className="sm:hidden text-center mt-8">
+                <Link
+                  to="/explorar"
+                  className="inline-flex items-center gap-2 text-indigo-600 font-medium"
+                >
+                  Ver todos los libros
+                  <ArrowRight size={18} />
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-16 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+              <BookOpen size={64} className="mx-auto text-gray-300 mb-4" />
+              <p className="text-gray-500 text-lg mb-2">La biblioteca está vacía</p>
+              <p className="text-gray-400 text-sm mb-6">Comienza agregando libros desde el panel de administración</p>
+              <Link
+                to="/admin/login"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-all shadow-sm"
+              >
+                <Shield size={18} />
+                Acceder como Administrador
               </Link>
             </div>
           )}
-
-          <div className="sm:hidden text-center mt-8">
-            <Link
-              to="/explorar"
-              className="inline-flex items-center gap-2 text-indigo-600 font-medium"
-            >
-              Ver todos los libros
-              <ArrowRight size={18} />
-            </Link>
-          </div>
         </div>
       </section>
 

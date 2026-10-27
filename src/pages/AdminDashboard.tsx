@@ -35,9 +35,20 @@ export default function AdminDashboard() {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         {books.length === 0 ? (
           <div className="p-12 text-center">
-            <BookOpen size={48} className="mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-500">No hay libros en la biblioteca</p>
-            <p className="text-gray-400 text-sm mt-1">Agrega el primer libro con el botón de arriba</p>
+            <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <BookOpen size={40} className="text-indigo-600" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">¡Bienvenido a tu biblioteca!</h3>
+            <p className="text-gray-500 mb-6">Comienza agregando tu primer libro haciendo clic en el botón "Agregar Libro"</p>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 max-w-md mx-auto">
+              <p className="text-amber-800 text-sm font-medium mb-2">💡 Consejos:</p>
+              <ul className="text-amber-700 text-xs text-left space-y-1">
+                <li>• Puedes subir archivos PDF de hasta 30 MB</li>
+                <li>• Organiza los libros por carreras o géneros</li>
+                <li>• Los usuarios podrán leer, descargar e imprimir</li>
+                <li>• Las vistas y descargas se cuentan automáticamente</li>
+              </ul>
+            </div>
           </div>
         ) : (
           <div className="divide-y divide-gray-100">

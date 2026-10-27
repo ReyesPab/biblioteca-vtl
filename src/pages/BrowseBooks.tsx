@@ -148,17 +148,26 @@ export default function BrowseBooks() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16">
-          <BookOpen size={48} className="mx-auto text-gray-300 mb-4" />
-          <p className="text-gray-500 text-lg">No se encontraron libros</p>
-          <p className="text-gray-400 text-sm mt-1">Intenta con otros filtros o términos de búsqueda</p>
-          {hasFilters && (
-            <button
-              onClick={clearFilters}
-              className="mt-4 text-indigo-600 font-medium hover:text-indigo-700"
-            >
-              Limpiar filtros
-            </button>
+        <div className="text-center py-16 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+          <BookOpen size={64} className="mx-auto text-gray-300 mb-4" />
+          {books.length === 0 ? (
+            <>
+              <p className="text-gray-500 text-lg mb-2">La biblioteca está vacía</p>
+              <p className="text-gray-400 text-sm">Los libros aparecerán aquí cuando el administrador los agregue</p>
+            </>
+          ) : (
+            <>
+              <p className="text-gray-500 text-lg mb-2">No se encontraron libros</p>
+              <p className="text-gray-400 text-sm">Intenta con otros filtros o términos de búsqueda</p>
+              {hasFilters && (
+                <button
+                  onClick={clearFilters}
+                  className="mt-4 text-indigo-600 font-medium hover:text-indigo-700"
+                >
+                  Limpiar filtros
+                </button>
+              )}
+            </>
           )}
         </div>
       )}

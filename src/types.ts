@@ -9,6 +9,7 @@ export interface Book {
   content: string;
   pdfData?: string;
   pdfName?: string;
+  hasPdf?: boolean; // Flag to know if PDF exists in IndexedDB
   createdAt: string;
   downloads: number;
   views: number;

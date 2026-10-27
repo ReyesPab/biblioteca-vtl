@@ -42,7 +42,7 @@ export default function BookReader() {
 
   const allCategories = [...STUDY_CATEGORIES, ...FICTION_CATEGORIES];
   const subcategoryLabel = allCategories.find(c => c.value === book.subcategory)?.label || book.subcategory;
-  const hasPdf = !!book.pdfData;
+  const hasPdf = book.hasPdf || !!book.pdfData;
   const hasText = !!book.content;
 
   const handleDownload = () => {

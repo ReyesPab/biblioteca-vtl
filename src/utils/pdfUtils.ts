@@ -31,4 +31,4 @@ export function formatFileSize(bytes: number): string {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-export const MAX_PDF_SIZE = 4 * 1024 * 1024; // 4MB
+export const MAX_PDF_SIZE = 30 * 1024 * 1024; // 30MB

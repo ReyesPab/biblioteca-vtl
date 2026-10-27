@@ -10,7 +10,7 @@ export default function BookCard({ book }: BookCardProps) {
   const allCategories = [...STUDY_CATEGORIES, ...FICTION_CATEGORIES];
   const subcategoryLabel = allCategories.find(c => c.value === book.subcategory)?.label || book.subcategory;
   const categoryLabel = book.category === 'estudio' ? '📚 Estudio' : '✨ Ficción';
-  const hasPdf = !!book.pdfData;
+  const hasPdf = book.hasPdf || !!book.pdfData;
 
   return (
     <Link

@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Trash2, Edit2, BookOpen, X, Check, ChevronDown, FileText, Upload, AlertCircle } from 'lucide-react';
-import { useLibrary, getMaxPdfSize } from '../context/LibraryContext';
+import { useLibrary } from '../context/LibraryContext';
 import { STUDY_CATEGORIES, FICTION_CATEGORIES, COVER_COLORS } from '../types';
-import { fileToBase64, formatFileSize } from '../utils/pdfUtils';
+import { fileToBase64, formatFileSize, MAX_PDF_SIZE } from '../utils/pdfUtils';
 
 export default function AdminDashboard() {
   const { books, isAdmin, addBook, deleteBook } = useLibrary();
@@ -37,6 +37,7 @@ export default function AdminDashboard() {
           <div className="p-12 text-center">
             <BookOpen size={48} className="mx-auto text-gray-300 mb-4" />
             <p className="text-gray-500">No hay libros en la biblioteca</p>
+            <p className="text-gray-400 text-sm mt-1">Agrega el primer libro con el botón de arriba</p>
           </div>
         ) : (
           <div className="divide-y divide-gray-100">
@@ -64,12 +65,14 @@ export default function AdminDashboard() {
                   <button
                     onClick={() => { setEditingId(book.id); setShowForm(true); }}
                     className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
+                    title="Editar"
                   >
                     <Edit2 size={18} />
                   </button>
                   <button
                     onClick={() => { if (confirm('¿Eliminar este libro?')) deleteBook(book.id); }}
                     className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                    title="Eliminar"
                   >
                     <Trash2 size={18} />
                   </button>
@@ -110,7 +113,6 @@ function BookForm({ editingId, onClose }: { editingId: string | null; onClose: (
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const categories = category === 'estudio' ? STUDY_CATEGORIES : FICTION_CATEGORIES;
-  const maxSize = getMaxPdfSize();
 
   const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -123,8 +125,8 @@ function BookForm({ editingId, onClose }: { editingId: string | null; onClose: (
       return;
     }
 
-    if (file.size > maxSize) {
-      setUploadError(`El archivo es demasiado grande. Máximo: ${formatFileSize(maxSize)}`);
+    if (file.size > MAX_PDF_SIZE) {
+      setUploadError(`El archivo es demasiado grande. Máximo: ${formatFileSize(MAX_PDF_SIZE)}`);
       return;
     }
 
@@ -264,7 +266,7 @@ function BookForm({ editingId, onClose }: { editingId: string | null; onClose: (
                     {uploading ? 'Procesando...' : 'Haz clic para subir un PDF'}
                   </span>
                   <span className="text-xs text-gray-400">
-                    Máximo {formatFileSize(maxSize)} • Solo archivos .pdf
+                    Máximo {formatFileSize(MAX_PDF_SIZE)} • Solo archivos .pdf
                   </span>
                 </label>
               </div>
@@ -281,6 +283,7 @@ function BookForm({ editingId, onClose }: { editingId: string | null; onClose: (
                   type="button"
                   onClick={removePdf}
                   className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                  title="Eliminar PDF"
                 >
                   <X size={18} />
                 </button>
@@ -359,6 +362,9 @@ function BookForm({ editingId, onClose }: { editingId: string | null; onClose: (
               className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none resize-y font-mono text-sm"
               placeholder="Escribe el contenido del libro aquí. Si subes un PDF, este texto será la descripción extendida."
             />
+            <p className="text-xs text-gray-400 mt-1">
+              Si subes un PDF, los usuarios verán el PDF. Este texto es opcional como contenido adicional.
+            </p>
           </div>
 
           <div className="flex gap-3 pt-4 border-t border-gray-100">

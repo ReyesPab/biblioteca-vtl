@@ -317,13 +317,13 @@ function renderMarkdown(content: string) {
     } else if (line.startsWith('- ')) {
       elements.push(
         <li key={key++} className="text-gray-700 ml-4 mb-1 list-disc">
-          {line.slice(2)}
+          {renderInline(line.slice(2))}
         </li>
       );
     } else if (/^\d+\. /.test(line)) {
       elements.push(
         <li key={key++} className="text-gray-700 ml-4 mb-1 list-decimal">
-          {line.replace(/^\d+\. /, '')}
+          {renderInline(line.replace(/^\d+\. /, ''))}
         </li>
       );
     } else if (line.trim() === '') {
@@ -331,11 +331,50 @@ function renderMarkdown(content: string) {
     } else {
       elements.push(
         <p key={key++} className="text-gray-700 leading-relaxed mb-2">
-          {line}
+          {renderInline(line)}
         </p>
       );
     }
   }
 
   return elements;
+}
+
+function renderInline(text: string): (string | JSX.Element)[] {
+  const parts: (string | JSX.Element)[] = [];
+  let remaining = text;
+  let key = 0;
+
+  while (remaining.length > 0) {
+    const boldMatch = remaining.match(/\*\*(.+?)\*\*/);
+    const codeMatch = remaining.match(/`([^`]+)`/);
+
+    let matchIndex = Infinity;
+    let matchLength = 0;
+    let matchElement: JSX.Element | null = null;
+
+    if (boldMatch && boldMatch.index !== undefined && boldMatch.index < matchIndex) {
+      matchIndex = boldMatch.index;
+      matchLength = boldMatch[0].length;
+      matchElement = <strong key={`b${key++}`} className="font-bold">{boldMatch[1]}</strong>;
+    }
+    if (codeMatch && codeMatch.index !== undefined && codeMatch.index < matchIndex) {
+      matchIndex = codeMatch.index;
+      matchLength = codeMatch[0].length;
+      matchElement = <code key={`c${key++}`} className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono text-indigo-600">{codeMatch[1]}</code>;
+    }
+
+    if (matchElement && matchIndex < Infinity) {
+      if (matchIndex > 0) {
+        parts.push(remaining.slice(0, matchIndex));
+      }
+      parts.push(matchElement);
+      remaining = remaining.slice(matchIndex + matchLength);
+    } else {
+      parts.push(remaining);
+      break;
+    }
+  }
+
+  return parts;
 }

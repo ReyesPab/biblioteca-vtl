@@ -1,77 +1,112 @@
 # 📚 BiblioVirtual - Biblioteca Digital
 
-Biblioteca virtual completa con sistema de administración, soporte para PDFs, organización por categorías (estudio/carreras y ficción), y acceso mediante enlaces y códigos QR.
+Una biblioteca virtual completa con soporte para PDFs, organizada por carreras y géneros literarios.
 
 ## ✨ Características
 
-- 📖 **Lectura en línea** - Lee libros directamente en el navegador
-- 📄 **Soporte PDF** - Sube y visualiza libros en formato PDF
-- 🎓 **Organización por carreras** - Clasifica libros por tipo de estudio y materia
-- ✨ **Ficción y entretenimiento** - Romance, terror, fantasía y más géneros
-- 🔍 **Búsqueda y filtros** - Encuentra libros rápidamente
-- 📱 **Códigos QR** - Comparte acceso mediante QR
-- 👨‍💼 **Panel de administración** - Gestiona libros fácilmente
-- 💾 **Descargas** - Los usuarios pueden descargar libros
-- 🖨️ **Impresión** - Imprime libros directamente
+- 📄 **Soporte PDF completo** - Sube, lee y descarga libros en PDF
+- 🎓 **Organización por carreras** - 15 categorías de estudio (Medicina, Derecho, Ingeniería, etc.)
+- ✨ **Géneros de ficción** - 12 categorías (Romance, Terror, Fantasía, etc.)
+- 🔍 **Búsqueda inteligente** - Busca por título, autor o tema
+- 🎯 **Filtros avanzados** - Combina categoría y subcategoría
+- 📱 **Códigos QR** - Comparte acceso fácilmente
+- 👨‍💼 **Panel de administración** - Gestiona libros con contraseña
+- 💾 **Datos persistentes** - Todo se guarda en localStorage
+- 📱 **Diseño responsive** - Funciona en móvil, tablet y desktop
 
-## 🚀 Despliegue en GitHub Pages
+## 🚀 Despliegue en Vercel (Paso a Paso)
 
-### Opción 1: Despliegue Manual (Recomendado)
+### **PASO 1: Crear cuenta en GitHub**
 
-1. **Crea un repositorio en GitHub**
-   - Ve a [github.com/new](https://github.com/new)
-   - Nombre: `biblioteca-virtual` (o el que prefieras)
-   - Hazlo público
-   - NO inicialices con README
+1. Ve a [github.com](https://github.com)
+2. Haz clic en **"Sign up"** (arriba a la derecha)
+3. Completa el formulario con tu email
+4. Verifica tu cuenta desde el email que te enviarán
 
-2. **Sube tu código**
-   ```bash
-   # En la carpeta de tu proyecto
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin https://github.com/TU-USUARIO/biblioteca-virtual.git
-   git push -u origin main
-   ```
+### **PASO 2: Crear un nuevo repositorio**
 
-3. **Configura GitHub Pages**
-   - Ve a tu repositorio en GitHub
-   - Click en **Settings** (Configuración)
-   - En el menú lateral, busca **Pages**
-   - En **Source**, selecciona **GitHub Actions**
-   - Crea un workflow o usa el que está en `.github/workflows/deploy.yml`
+1. En GitHub, haz clic en el botón **"+"** (arriba a la derecha) → **"New repository"**
+2. Llena los datos:
+   - **Repository name**: `biblioteca-virtual` (o el nombre que prefieras)
+   - **Description**: `Biblioteca virtual con soporte PDF`
+   - **Public** ✅ (debe ser público)
+   - ❌ **NO marques** "Add a README file"
+   - ❌ **NO marques** "Add .gitignore"
+   - ❌ **NO marques** "Choose a license"
+3. Haz clic en **"Create repository"**
 
-4. **Accede a tu biblioteca**
-   - Tu sitio estará en: `https://TU-USUARIO.github.io/biblioteca-virtual/`
+### **PASO 3: Subir tu código a GitHub**
 
-### Opción 2: Despliegue con Vercel (Más Fácil)
+Abre una terminal en la carpeta de tu proyecto y ejecuta estos comandos **uno por uno**:
+
+```bash
+# Inicializar Git
+git init
+
+# Agregar todos los archivos
+git add .
+
+# Crear el primer commit
+git commit -m "Biblioteca virtual - primera versión"
+
+# Cambiar a la rama main
+git branch -M main
+
+# Conectar con tu repositorio (CAMBIA "TU-USUARIO" por tu nombre de GitHub)
+git remote add origin https://github.com/TU-USUARIO/bibliotecavirtual.git
+
+# Subir el código
+git push -u origin main
+```
+
+**Nota importante**: Cuando te pida autenticación, usa un **Personal Access Token** en lugar de tu contraseña:
+1. Ve a GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Haz clic en **"Generate new token"** → **"Generate new token (classic)"**
+3. Dale un nombre (ej: "vercel-deploy")
+4. Selecciona el scope **"repo"** (primer checkbox)
+5. Haz clic en **"Generate token"**
+6. **Copia el token inmediatamente** (solo se muestra una vez)
+7. Úsalo como contraseña cuando Git te lo pida
+
+### **PASO 4: Crear cuenta en Vercel**
 
 1. Ve a [vercel.com](https://vercel.com)
-2. Inicia sesión con GitHub
-3. Click en **New Project**
-4. Importa tu repositorio
-5. Vercel detectará automáticamente que es Vite
-6. Click en **Deploy**
-7. ¡Listo! Tu sitio estará en `https://biblioteca-virtual.vercel.app`
+2. Haz clic en **"Sign Up"** (arriba a la derecha)
+3. Selecciona **"Continue with GitHub"** (la opción más fácil)
+4. Autoriza a Vercel para acceder a tu cuenta de GitHub
 
-### Opción 3: Despliegue con Netlify
+### **PASO 5: Importar tu proyecto en Vercel**
 
-1. Ve a [netlify.com](https://netlify.com)
-2. Inicia sesión con GitHub
-3. Click en **Add new site** → **Import an existing project**
-4. Selecciona tu repositorio
-5. Configura:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-6. Click en **Deploy site**
+1. En Vercel, haz clic en **"Add New..."** → **"Project"**
+2. Verás una lista de tus repositorios de GitHub
+3. Busca **"biblioteca-virtual"** y haz clic en **"Import"**
+4. Vercel detectará automáticamente que es un proyecto Vite
+5. **No necesitas cambiar nada** en la configuración:
+   - Framework Preset: Vite (detectado automáticamente)
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+6. Haz clic en **"Deploy"**
+
+### **PASO 6: Esperar el despliegue**
+
+1. Vercel construirá tu proyecto (tarda 1-2 minutos)
+2. Verás el progreso en pantalla
+3. Cuando termine, verás **"Congratulations!"** con tu URL
+4. Tu biblioteca estará en: `https://biblioteca-virtual.vercel.app` (o el nombre que elegiste)
+
+### **PASO 7: ¡Listo! Tu biblioteca está en línea**
+
+- ✅ Tu URL permanente: `https://tu-proyecto.vercel.app`
+- ✅ Se actualiza automáticamente cuando hagas push a GitHub
+- ✅ HTTPS incluido gratis
+- ✅ Sin límite de tiempo
 
 ## 🔐 Acceso de Administrador
 
 - **Contraseña por defecto**: `admin123`
 - Para cambiarla, edita `src/context/LibraryContext.tsx` línea ~180
 - Busca: `if (password === 'admin123')`
-- Cambia `admin123` por tu contraseña
+- Cambia `admin123` por tu nueva contraseña
 
 ## 🛠️ Desarrollo Local
 
@@ -79,11 +114,14 @@ Biblioteca virtual completa con sistema de administración, soporte para PDFs, o
 # Instalar dependencias
 npm install
 
-# Ejecutar en desarrollo
+# Ejecutar en desarrollo (http://localhost:5173)
 npm run dev
 
 # Construir para producción
 npm run build
+
+# Vista previa de la build
+npm run preview
 ```
 
 ## 📁 Estructura del Proyecto
@@ -92,34 +130,65 @@ npm run build
 biblioteca-virtual/
 ├── src/
 │   ├── components/       # Componentes reutilizables
-│   ├── context/          # Estado global (LibraryContext)
+│   │   ├── Navbar.tsx
+│   │   └── BookCard.tsx
+│   ├── context/          # Estado global
+│   │   └── LibraryContext.tsx
 │   ├── pages/            # Páginas principales
-│   ├── utils/            # Utilidades (PDF, etc.)
+│   │   ├── Home.tsx
+│   │   ├── BrowseBooks.tsx
+│   │   ├── BookReader.tsx
+│   │   ├── QRPage.tsx
+│   │   ├── AdminLogin.tsx
+│   │   └── AdminDashboard.tsx
+│   ├── utils/            # Utilidades
+│   │   └── pdfUtils.ts
 │   ├── types.ts          # Tipos TypeScript
 │   ├── App.tsx           # Componente principal
-│   └── main.tsx          # Punto de entrada
-├── public/               # Archivos estáticos
-└── package.json          # Dependencias
+│   ├── main.tsx          # Punto de entrada
+│   └── index.css         # Estilos globales
+├── index.html
+├── package.json
+├── vite.config.js
+└── tsconfig.json
 ```
 
 ## 🎨 Personalización
 
-### Cambiar colores
+### Cambiar colores de portada
 Edita `src/types.ts` en la sección `COVER_COLORS`
 
-### Agregar categorías
-Edita `src/types.ts`:
-- `STUDY_CATEGORIES` para carreras/materias
-- `FICTION_CATEGORIES` para géneros de ficción
+### Agregar categorías de estudio
+Edita `src/types.ts` → `STUDY_CATEGORIES`
 
-### Cambiar el nombre
-Edita `index.html` y busca `<title>`
+### Agregar géneros de ficción
+Edita `src/types.ts` → `FICTION_CATEGORIES`
+
+### Cambiar el nombre de la biblioteca
+Edita `index.html` → `<title>` tag
 
 ## 📝 Notas Importantes
 
 - Los libros se guardan en `localStorage` del navegador
 - Tamaño máximo de PDF: 4MB (por limitaciones de localStorage)
-- Para producción con muchos libros, considera usar una base de datos real
+- Para producción con muchos libros, considera usar una base de datos real (Firebase, Supabase, etc.)
+
+## 🔄 Actualizar tu sitio
+
+Cuando hagas cambios en el código:
+
+```bash
+# Agregar cambios
+git add .
+
+# Crear commit
+git commit -m "Descripción de los cambios"
+
+# Subir a GitHub
+git push
+```
+
+**Vercel detectará automáticamente el push y actualizará tu sitio en 1-2 minutos.**
 
 ## 🤝 Contribuciones
 
@@ -131,4 +200,4 @@ Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
 ---
 
-**Desarrollado con ❤️ usando React, Vite y Tailwind CSS**
+**Desarrollado con ❤️ usando React, Vite, TypeScript y Tailwind CSS**

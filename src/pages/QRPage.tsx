@@ -41,7 +41,7 @@ export default function QRPage() {
   };
 
   const quickLinks = [
-    { label: '🏠 Página Principal', path: '#/' },
+    { label: '🏠 Página Principal', path: '' },
     { label: '📚 Explorar Libros', path: '#/explorar' },
   ];
 

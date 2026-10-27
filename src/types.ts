@@ -14,8 +14,6 @@ export interface Book {
   views: number;
 }
 
-export type UserRole = 'admin' | 'user';
-
 export interface CategoryOption {
   value: string;
   label: string;

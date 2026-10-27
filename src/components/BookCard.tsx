@@ -1,7 +1,6 @@
-import { Book } from '../types';
+import { Book, STUDY_CATEGORIES, FICTION_CATEGORIES } from '../types';
 import { BookOpen, Download, Eye, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { STUDY_CATEGORIES, FICTION_CATEGORIES } from '../types';
 
 interface BookCardProps {
   book: Book;
@@ -22,16 +21,16 @@ export default function BookCard({ book }: BookCardProps) {
         className="h-48 flex items-center justify-center relative overflow-hidden"
         style={{ backgroundColor: book.coverColor + '15' }}
       >
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{ background: `linear-gradient(135deg, ${book.coverColor}, transparent)` }}
+        />
         <div className="relative flex flex-col items-center gap-2">
           <div
             className="w-16 h-20 rounded-lg shadow-lg flex items-center justify-center"
             style={{ backgroundColor: book.coverColor }}
           >
-            {hasPdf ? (
-              <FileText size={24} className="text-white" />
-            ) : (
-              <BookOpen size={24} className="text-white" />
-            )}
+            {hasPdf ? <FileText size={24} className="text-white" /> : <BookOpen size={24} className="text-white" />}
           </div>
         </div>
         <div className="absolute top-3 right-3 flex gap-1.5">

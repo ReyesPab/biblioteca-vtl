@@ -30,11 +30,39 @@ const SAMPLE_BOOKS: Book[] = [
 
 ## Capítulo 1: ¿Qué es programar?
 
-Programar es el arte de darle instrucciones a una computadora para que realice tareas específicas.
+Programar es el arte de darle instrucciones a una computadora para que realice tareas específicas. Es como escribir una receta de cocina, pero para una máquina.
 
 ## Capítulo 2: Variables y tipos de datos
 
-Las variables son como cajas donde guardamos información.
+Las variables son como cajas donde guardamos información. Cada caja tiene un nombre y contiene un valor.
+
+\`\`\`
+let nombre = "María";
+let edad = 25;
+let esEstudiante = true;
+\`\`\`
+
+## Capítulo 3: Estructuras de control
+
+Las estructuras de control nos permiten tomar decisiones en nuestro código.
+
+\`\`\`
+if (edad >= 18) {
+  console.log("Es mayor de edad");
+} else {
+  console.log("Es menor de edad");
+}
+\`\`\`
+
+## Capítulo 4: Funciones
+
+Las funciones son bloques de código reutilizables.
+
+\`\`\`
+function saludar(nombre) {
+  return "Hola, " + nombre + "!";
+}
+\`\`\`
 
 ## Ejercicios
 
@@ -57,13 +85,27 @@ Las variables son como cajas donde guardamos información.
 
 ## Prólogo
 
-La casa llevaba abandonada más de veinte años cuando Elena la descubrió por casualidad.
+La casa llevaba abandonada más de veinte años cuando Elena la descubrió por casualidad. Las enredaderas cubrían cada centímetro de la fachada, y el portón de hierro chirrió como un lamento al empujarlo.
 
 ## Capítulo 1
 
-No debería haber entrado. Lo sabía. Las voces del pueblo habían sido claras: "Nadie vuelve igual de esa casa."
+No debería haber entrado. Lo sabía. Las voces del pueblo habían sido claras: "Nadie vuelve igual de esa casa." Pero Elena no creía en supersticiones. Era periodista, investigadora, una mujer de ciencia.
 
-Pero Elena no creía en supersticiones. Era periodista, investigadora, una mujer de ciencia.`,
+El jardín estaba exactamente como lo describían las crónicas antiguas. Flores que no deberían existir, con pétalos negros como la noche más oscura. Y en el centro, una fuente de piedra con un ángel decapitado.
+
+—¿Quién anda ahí? —susurró, aunque sabía que no había nadie.
+
+O eso quería creer.
+
+Porque esa noche, cuando el reloj marcó las tres de la mañana, Elena escuchó los pasos en el jardín. Lentos. Deliberados. Acercándose a su ventana.
+
+## Capítulo 2
+
+Los diarios de la familia Montenegro contaban una historia diferente a la oficial. No fue un incendio lo que destruyó la mansión. Fue algo mucho peor.
+
+Elena pasó tres días leyendo aquellos papeles amarillentos, y cada página la hundía más en una verdad que no quería aceptar: la casa no estaba embrujada. La casa estaba viva.
+
+Y tenía hambre.`,
     createdAt: '2024-02-20',
     downloads: 234,
     views: 1203,
@@ -80,12 +122,33 @@ Pero Elena no creía en supersticiones. Era periodista, investigadora, una mujer
 
 ## Unidad 1: Introducción al Derecho Civil
 
-El Derecho Civil es la rama del derecho privado que regula las relaciones entre personas.
+El Derecho Civil es la rama del derecho privado que regula las relaciones entre personas, abarcando aspectos como la personalidad jurídica, la familia, la propiedad y las obligaciones.
 
 ## Unidad 2: Personas y Capacidad Jurídica
 
 ### Persona Natural
-Toda persona humana es sujeto de derecho desde su nacimiento.`,
+Toda persona humana es sujeto de derecho desde su nacimiento. La capacidad jurídica es la aptitud para ser titular de derechos y obligaciones.
+
+### Persona Jurídica
+Son entidades abstractas creadas por el derecho que tienen capacidad para adquirir derechos y contraer obligaciones.
+
+## Unidad 3: Los Bienes
+
+Los bienes se clasifican en:
+- Bienes muebles e inmuebles
+- Bienes fungibles y no fungibles
+- Bienes consumibles y no consumibles
+- Bienes divisibles e indivisibles
+
+## Unidad 4: Las Obligaciones
+
+La obligación es un vínculo jurídico entre dos personas, por el cual una (deudor) se compromete a dar, hacer o no hacer algo en favor de otra (acreedor).
+
+### Fuentes de las obligaciones:
+1. El contrato
+2. El cuasicontrato
+3. El delito civil
+4. La ley`,
     createdAt: '2024-03-10',
     downloads: 89,
     views: 456,
@@ -102,22 +165,111 @@ Toda persona humana es sujeto de derecho desde su nacimiento.`,
 
 ## Capítulo 1
 
-El observatorio siempre olía a café viejo y papel. A Sofía le encantaba ese aroma.
+El observatorio siempre olía a café viejo y papel. A Sofía le encantaba ese aroma porque le recordaba por qué había dedicado su vida a estudiar las estrellas.
 
 Esa noche, sin embargo, algo era diferente. Había alguien nuevo en el turno nocturno.
 
-—¿Eres la nueva? —preguntó ella sin levantar la vista de su telescopio.`,
+—¿Eres la nueva? —preguntó ella sin levantar la vista de su telescopio.
+
+—No exactamente. Soy el nuevo director del departamento de astrofísica —respondió una voz masculina, cálida como una noche de verano.
+
+Sofía giró lentamente. Lo que vio la dejó sin palabras: ojos del color del cielo nocturno, una sonrisa que prometía aventuras, y una chaqueta que había visto días mejores.
+
+—Diego Morales —dijo, extendiendo la mano—. Encantado de, finalmente, conocer a la persona que ha mantenido este observatorio funcionando durante los últimos cinco años.
+
+Sofía sintió que algo en su pecho se movió. Algo que no había sentido desde que era adolescente y miraba las estrellas soñando con el futuro.
+
+—Sofía Herrera —respondió, tomando su mano.
+
+Y en ese momento, bajo la bóveda infinita del cielo, comenzó una historia que cambiaría todo.`,
     createdAt: '2024-04-05',
     downloads: 312,
     views: 1567,
   },
+  {
+    id: uuidv4(),
+    title: 'Anatomía Humana Esencial',
+    author: 'Dra. Patricia Vega',
+    description: 'Guía visual de anatomía humana para estudiantes de medicina.',
+    category: 'estudio',
+    subcategory: 'medicina',
+    coverColor: '#22c55e',
+    content: `# Anatomía Humana Esencial
+
+## Sistema Óseo
+
+El cuerpo humano adulto tiene 206 huesos. Estos se dividen en:
+- Esqueleto axial (80 huesos): cráneo, columna vertebral, costillas y esternón
+- Esqueleto apendicular (126 huesos): extremidades superiores e inferiores, cinturas escapular y pélvica
+
+## Sistema Muscular
+
+El cuerpo humano tiene más de 600 músculos. Los principales grupos son:
+
+1. **Músculos de la cabeza y cuello**
+   - Frontal, orbicular del ojo, masetero, esternocleidomastoideo
+
+2. **Músculos del tronco**
+   - Pectoral mayor, recto abdominal, dorsal ancho, trapecio
+
+3. **Músculos de las extremidades**
+   - Bíceps braquial, tríceps braquial, cuádriceps, gastrocnemio
+
+## Sistema Cardiovascular
+
+El corazón tiene 4 cámaras:
+- Aurícula derecha
+- Aurícula izquierda
+- Ventrículo derecho
+- Ventrículo izquierdo
+
+El ciclo cardíaco consta de sístole (contracción) y diástole (relajación).
+
+## Sistema Nervioso
+
+Dividido en:
+- Sistema nervioso central (cerebro y médula espinal)
+- Sistema nervioso periférico (nervios craneales y espinales)`,
+    createdAt: '2024-05-12',
+    downloads: 178,
+    views: 934,
+  },
+  {
+    id: uuidv4(),
+    title: 'El Último Dragón',
+    author: 'Miguel Ángel Fuentes',
+    description: 'Una épica historia de fantasía donde un joven descubre que es el último heredero de los domadores de dragones.',
+    category: 'ficcion',
+    subcategory: 'fantasia',
+    coverColor: '#f97316',
+    content: `# El Último Dragón
+
+## Prólogo
+
+En un tiempo antes del tiempo, cuando los ríos hablaban y las montañas cantaban, existían los Domadores. Hombres y mujeres capaces de comunicarse con los dragones, las criaturas más antiguas del mundo.
+
+Pero los dragones desaparecieron. O eso creía todo el mundo.
+
+## Capítulo 1
+
+Kael tenía diecisiete años y una marca en el hombro que nadie podía explicar. Era un dibujo extraño, como un dragón enrollado sobre sí mismo, que apareció la noche de su decimotercer cumpleaños.
+
+—No es normal, muchacho —le decía su abuela cada vez que se lo pedía que se cubriera—. La gente habla.
+
+Pero Kael no podía evitarlo. La marca pulsaba, especialmente cuando miraba hacia las montañas del norte, donde las nubes siempre parecían tener formas de alas.
+
+Esa noche, mientras dormía, soñó con fuego. No un fuego que quema, sino uno que habla. Y el fuego le dijo:
+
+"Ven a buscarme. He esperado mil años."
+
+Kael despertó con el corazón latiendo como un tambor de guerra. Sabía que su vida estaba a punto de cambiar para siempre.
+
+Tomó su capa, su espada heredada de su padre, y se dirigió hacia las montañas. Hacia el último dragón.`,
+    createdAt: '2024-06-18',
+    downloads: 267,
+    views: 1389,
+  },
 ];
-
-const MAX_PDF_SIZE = 4 * 1024 * 1024;
-
-export function getMaxPdfSize() {
-  return MAX_PDF_SIZE;
-}
 
 export function LibraryProvider({ children }: { children: ReactNode }) {
   const [books, setBooks] = useState<Book[]>(() => {

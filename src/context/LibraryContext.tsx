@@ -1,15 +1,16 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Book } from '../types';
 import { v4 as uuidv4 } from 'uuid';
+import { savePdfToIndexedDB, getPdfFromIndexedDB, deletePdfFromIndexedDB } from '../utils/indexedDB';
 
 interface LibraryContextType {
   books: Book[];
   isAdmin: boolean;
   login: (password: string) => boolean;
   logout: () => void;
-  addBook: (book: Omit<Book, 'id' | 'createdAt' | 'downloads' | 'views'>) => void;
-  deleteBook: (id: string) => void;
-  updateBook: (id: string, book: Partial<Book>) => void;
+  addBook: (book: Omit<Book, 'id' | 'createdAt' | 'downloads' | 'views'>) => Promise<void>;
+  deleteBook: (id: string) => Promise<void>;
+  updateBook: (id: string, book: Partial<Book>) => Promise<void>;
   incrementViews: (id: string) => void;
   incrementDownloads: (id: string) => void;
   searchBooks: (query: string) => Book[];
@@ -70,8 +71,8 @@ function saludar(nombre) {
 2. Escribe una función que calcule el área de un rectángulo
 3. Crea un programa que determine si un número es par o impar`,
     createdAt: '2024-01-15',
-    downloads: 145,
-    views: 892,
+    downloads: 0,
+    views: 0,
   },
   {
     id: uuidv4(),
@@ -107,8 +108,8 @@ Elena pasó tres días leyendo aquellos papeles amarillentos, y cada página la 
 
 Y tenía hambre.`,
     createdAt: '2024-02-20',
-    downloads: 234,
-    views: 1203,
+    downloads: 0,
+    views: 0,
   },
   {
     id: uuidv4(),
@@ -150,8 +151,8 @@ La obligación es un vínculo jurídico entre dos personas, por el cual una (deu
 3. El delito civil
 4. La ley`,
     createdAt: '2024-03-10',
-    downloads: 89,
-    views: 456,
+    downloads: 0,
+    views: 0,
   },
   {
     id: uuidv4(),
@@ -183,8 +184,8 @@ Sofía sintió que algo en su pecho se movió. Algo que no había sentido desde 
 
 Y en ese momento, bajo la bóveda infinita del cielo, comenzó una historia que cambiaría todo.`,
     createdAt: '2024-04-05',
-    downloads: 312,
-    views: 1567,
+    downloads: 0,
+    views: 0,
   },
   {
     id: uuidv4(),
@@ -231,8 +232,8 @@ Dividido en:
 - Sistema nervioso central (cerebro y médula espinal)
 - Sistema nervioso periférico (nervios craneales y espinales)`,
     createdAt: '2024-05-12',
-    downloads: 178,
-    views: 934,
+    downloads: 0,
+    views: 0,
   },
   {
     id: uuidv4(),
@@ -266,39 +267,63 @@ Kael despertó con el corazón latiendo como un tambor de guerra. Sabía que su 
 
 Tomó su capa, su espada heredada de su padre, y se dirigió hacia las montañas. Hacia el último dragón.`,
     createdAt: '2024-06-18',
-    downloads: 267,
-    views: 1389,
+    downloads: 0,
+    views: 0,
   },
 ];
 
 export function LibraryProvider({ children }: { children: ReactNode }) {
-  const [books, setBooks] = useState<Book[]>(() => {
-    try {
-      const saved = localStorage.getItem('biblioteca_books');
-      if (saved) return JSON.parse(saved);
-    } catch (e) {
-      console.warn('Error loading books from localStorage');
-    }
-    return SAMPLE_BOOKS;
-  });
+  const [books, setBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const [isAdmin, setIsAdmin] = useState(() => {
     return localStorage.getItem('biblioteca_admin') === 'true';
   });
 
+  // Load books from localStorage on mount
   useEffect(() => {
-    try {
-      localStorage.setItem('biblioteca_books', JSON.stringify(books));
-    } catch (e) {
-      console.warn('localStorage full');
-      const booksWithoutPdf = books.map(b => ({ ...b, pdfData: undefined }));
-      localStorage.setItem('biblioteca_books', JSON.stringify(booksWithoutPdf));
-    }
-  }, [books]);
+    const loadBooks = async () => {
+      try {
+        const saved = localStorage.getItem('biblioteca_books');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          // Load PDFs from IndexedDB for books that have them
+          const booksWithPdfs = await Promise.all(
+            parsed.map(async (book: Book) => {
+              if (book.hasPdf) {
+                const pdfData = await getPdfFromIndexedDB(book.id);
+                return { ...book, pdfData };
+              }
+              return book;
+            })
+          );
+          setBooks(booksWithPdfs);
+        } else {
+          setBooks(SAMPLE_BOOKS);
+          localStorage.setItem('biblioteca_books', JSON.stringify(SAMPLE_BOOKS));
+        }
+      } catch (e) {
+        console.warn('Error loading books, using defaults');
+        setBooks(SAMPLE_BOOKS);
+      }
+      setLoading(false);
+    };
+    loadBooks();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('biblioteca_admin', String(isAdmin));
   }, [isAdmin]);
+
+  // Save books to localStorage (without PDF data) whenever books change
+  useEffect(() => {
+    if (loading) return;
+    const booksWithoutPdf = books.map(b => {
+      const { pdfData, ...rest } = b;
+      return { ...rest, hasPdf: !!pdfData };
+    });
+    localStorage.setItem('biblioteca_books', JSON.stringify(booksWithoutPdf));
+  }, [books, loading]);
 
   const login = (password: string): boolean => {
     if (password === 'admin123') {
@@ -310,22 +335,40 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
 
   const logout = () => setIsAdmin(false);
 
-  const addBook = (bookData: Omit<Book, 'id' | 'createdAt' | 'downloads' | 'views'>) => {
+  const addBook = async (bookData: Omit<Book, 'id' | 'createdAt' | 'downloads' | 'views'>) => {
+    const id = uuidv4();
     const newBook: Book = {
       ...bookData,
-      id: uuidv4(),
+      id,
       createdAt: new Date().toISOString().split('T')[0],
       downloads: 0,
       views: 0,
     };
+    
+    // Save PDF to IndexedDB if present
+    if (bookData.pdfData) {
+      await savePdfToIndexedDB(id, bookData.pdfData);
+    }
+    
     setBooks(prev => [newBook, ...prev]);
   };
 
-  const deleteBook = (id: string) => {
+  const deleteBook = async (id: string) => {
+    // Delete PDF from IndexedDB if present
+    await deletePdfFromIndexedDB(id);
     setBooks(prev => prev.filter(b => b.id !== id));
   };
 
-  const updateBook = (id: string, updates: Partial<Book>) => {
+  const updateBook = async (id: string, updates: Partial<Book>) => {
+    // Handle PDF update
+    if (updates.pdfData !== undefined) {
+      if (updates.pdfData) {
+        await savePdfToIndexedDB(id, updates.pdfData);
+      } else {
+        await deletePdfFromIndexedDB(id);
+      }
+    }
+    
     setBooks(prev => prev.map(b => b.id === id ? { ...b, ...updates } : b));
   };
 
@@ -346,6 +389,17 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       b.subcategory.toLowerCase().includes(q)
     );
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+          <p className="text-gray-500">Cargando biblioteca...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <LibraryContext.Provider value={{

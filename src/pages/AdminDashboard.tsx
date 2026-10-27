@@ -52,7 +52,7 @@ export default function AdminDashboard() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="font-semibold text-gray-900 truncate">{book.title}</h3>
-                    {book.pdfData && (
+                    {(book.hasPdf || book.pdfData) && (
                       <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-red-50 text-red-600 text-xs font-medium rounded-full">
                         <FileText size={12} />
                         PDF
@@ -266,7 +266,7 @@ function BookForm({ editingId, onClose }: { editingId: string | null; onClose: (
                     {uploading ? 'Procesando...' : 'Haz clic para subir un PDF'}
                   </span>
                   <span className="text-xs text-gray-400">
-                    Máximo {formatFileSize(MAX_PDF_SIZE)} • Solo archivos .pdf
+                    Máximo 30 MB • Solo archivos .pdf
                   </span>
                 </label>
               </div>
